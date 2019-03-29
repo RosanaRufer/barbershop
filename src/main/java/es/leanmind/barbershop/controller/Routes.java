@@ -4,4 +4,5 @@ public class Routes {
     public static final String login = "/login";
     public static final String home = "/";
     public static final String establishments = "/api/establishments";
+    public static final String appointments = "/appointments";
 }
