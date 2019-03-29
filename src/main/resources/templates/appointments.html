@@ -13,7 +13,10 @@
 
 
 <div>
-    <button id="appointment-request-button">Make Appointment</button>
+    <div id="appointment-request-result" th:text="${responseMessage}" ></div>
+    <form th:action="@{/appointments}" method="post">
+        <button id="appointment-request-button" >Make Appointment</button>
+    </form>
 </div>
 
 <div id="app"></div>
