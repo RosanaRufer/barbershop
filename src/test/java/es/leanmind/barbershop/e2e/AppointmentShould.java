@@ -1,6 +1,7 @@
 package es.leanmind.barbershop.e2e;
 
 import es.leanmind.barbershop.Configuration;
+import es.leanmind.barbershop.controller.Routes;
 import es.leanmind.barbershop.domain.Credentials;
 import es.leanmind.barbershop.domain.EstablishmentService;
 import es.leanmind.barbershop.helpers.IntegrationTests;
@@ -20,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 @SpringBootTest(
@@ -63,9 +64,26 @@ public class AppointmentShould extends IntegrationTests {
     public void be_made_by_the_owner() throws IOException, SQLException {
         createEstablishment();
         doWebLogin(Configuration.ownername, Configuration.webPassword);
-        //make the appointment
-        //assert the appointment is made
+
+        makeAppointment();
+
+        assertSuccess();
     }
+
+    private void makeAppointment() {
+        browser().get(Configuration.webUrl + Routes.appointments);
+
+        browser().findElement(By.id("appointment-request-button")).click();
+    }
+
+    private void assertSuccess() {
+        String result = browser()
+                .findElement(By.id("appointment-request-result"))
+                .getText();
+
+        assertEquals("Guay!", result);
+    }
+
 
     private void doWebLogin(String username, String password) {
         browser().get(Configuration.webUrl + Configuration.loginUrl);
